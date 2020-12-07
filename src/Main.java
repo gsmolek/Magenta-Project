@@ -10,11 +10,9 @@ public class Main {
         for (int i = 0; i < 8; i++)
             System.out.println(array[i]);
         System.out.println(set.getPolynomialValue());
-        sbox = Magenta.f();
         System.out.print("[");
         for (int i = 0; i < 256; i++) {
 
-            System.out.print(sbox[i]);
             System.out.print(",");
         }
         System.out.print("]");
