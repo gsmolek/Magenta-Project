@@ -33,21 +33,28 @@ public class  Mathmatics {
         arr[length-1]=0;
         return arr;
     }
-    public static byte[] twoByteArraysXOR(byte[] arr,byte[] xor,int length)
+    public static byte twoByteXOR(byte arr,byte xor)
+    {
+
+        byte result;
+        result=(byte)(Byte.toUnsignedInt(arr)^Byte.toUnsignedInt(xor));
+        return result;
+    }
+
+    /**
+     * preform xor operation on two byte arrays,each object in the array represent a bit value
+     * @param arr the input array consist
+     * @param xor
+     * @param length
+     * @return
+     */
+    public static byte[] twoByteArrayOfBitsXOR(byte[] arr,byte[] xor,int length)
     {
 
         byte[] result={0,0,0,0,0,0,0,0};
-        for(int i=0;i<length;i++)
-        {
-            if(arr[i]!=xor[i])
-                result[i]=1;
+        for (int i=0;i<length;i++) {
+            result[i]=(byte)(Byte.toUnsignedInt(arr[i])^Byte.toUnsignedInt(xor[i]));
         }
-        System.out.println("arr");
-        ByteVector.printByteArray(arr,8);
-        System.out.println("XOR");
-        ByteVector.printByteArray(xor,8);
-        System.out.println("result");
-        ByteVector.printByteArray(result,8);
         return result;
     }
 }

@@ -2,12 +2,46 @@ import java.io.ByteArrayOutputStream;
 import java.util.BitSet;
 
 public class Magenta {
-    int[] sbox;
+    private int[] sbox;
+
     public Magenta()
     {
         sbox=new int[256];
+        this.f();
     }
 
+    public byte[] C(byte [] array,int j)
+    {
+        if(j==1)
+            return this.T(array);
+        return this.T(this.attachTwoArrays(Mathmatics.twoByteArrayOfBitsXOR(this.split16LengthArray(array)[0],
+                this.bytesArrayToEvenByteArray(C(array,j-1)),8),
+                Mathmatics.twoByteArrayOfBitsXOR(this.split16LengthArray(array)[1],
+                        this.bytesArrayToOddByteArray(C(array,j-1)),8)));
+    }
+    public byte[][] split16LengthArray(byte[] array)
+    {
+        byte[][] res;
+        byte[] array1=new byte[8];
+        byte[] array2=new byte[8];
+        for(int i=0;i<8;i++)
+        {
+            array1[i]=array[i];
+            array2[i]=array[i+8];
+        }
+        res=new byte[][] {array1,array2};
+        return res;
+    }
+    public byte[] attachTwoArrays(byte[] array1,byte[] array2)
+    {
+        byte [] array_combined=new byte[16];
+        for(int i=0;i<8;i++)
+        {
+            array_combined[i]=array1[i];
+            array_combined[i+8]=array2[i];
+        }
+        return array_combined;
+    }
     /**
      * function PI-Each two indexes are representing two PE vector in size of 2
      * @param array byte array of 16 bytes
@@ -15,10 +49,11 @@ public class Magenta {
      */
     public byte[] PI (byte [] array)
     {
-        byte[] piVector=new byte[15];
-        for(int i=0;i<8;i++)
+        byte[] piVector=new byte[16];
+        for(int i=0,j=0;i<16;i+=2,j+=1)
         {
-            byte[] temp = PE(array[i],array[i+8]);
+            byte[] temp =new byte[2];
+            temp=PE(array[j],array[j+8]);
             piVector[i]=temp[0];
             piVector[i+1]=temp[1];
         }
@@ -65,6 +100,7 @@ public class Magenta {
         for(int i=0;i<4;i++)
         {
             new_array=this.PI(new_array);
+
         }
         return new_array;
     }
@@ -78,7 +114,7 @@ public class Magenta {
     {
         byte yRes=this.f(y);
         byte xorRes =(byte)(x^yRes);
-        return xorRes;
+        return this.f(xorRes);
     }
 
     /**
@@ -96,11 +132,11 @@ public class Magenta {
      * function PE(x,y)
      * @param x one byte
      * @param y one byte
-     * @return byte[] (A(x,y),A(y,x))
+     * @return byte[2] (A(x,y),A(y,x))
      */
     public byte[] PE(byte x,byte y)
     {
-        byte[] peVec={0,0};
+        byte[] peVec=new byte[2];
         peVec[0]=a(x,y);
         peVec[1]=a(y,x);
         return peVec;
@@ -127,12 +163,39 @@ public class Magenta {
             on=Mathmatics.shiftleft(on,8);
             if(flag==1)
             {
-                on=Mathmatics.twoByteArraysXOR(on,xor,8);
+                Mathmatics.twoByteArrayOfBitsXOR(on,xor,8);
+                on=Mathmatics.twoByteArrayOfBitsXOR(on,xor,8);
                 flag=0;
             }
             result=Mathmatics.convertByteArrayToInteger(on,8);
             sbox[i]=result;
         }
+        sbox[255]=0;
         return sbox;
+    }
+
+    /**
+     * return the array
+     * @return int[]
+     */
+    public int[] getSbox() {
+        return sbox;
+    }
+
+    /**
+     * prints this magenta Sbox
+     */
+    public void printSbox()
+    {
+        System.out.print("[");
+        for(int i=0;i<256;i++)
+        {
+            System.out.print(sbox[i]);
+            if(i!=255)
+                System.out.print(",");
+            if(i>7 && (i)%8==0)
+                System.out.print("\n");
+        }
+        System.out.print("]\n");
     }
 }

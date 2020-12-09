@@ -42,12 +42,35 @@ public class ByteVector {
     public int[] getPolynom() {
         return polynom;
     }
-    public static void printByteArray(byte[] array,int length)
+
+    /**
+     * function that prints byte array
+     * @param array the Array to print
+     * @param length the Array length
+     */
+    public static void printByteArrayAsBits(byte[] array,int length)
     {
         System.out.print("[");
         for(int i=0;i<length;i++)
         {
-            System.out.print(array[i]);
+            System.out.print(Integer.toBinaryString(Byte.toUnsignedInt(array[i])));
+            if(i<length-1)
+                System.out.print(", ");
+        }
+        System.out.print("]\n");
+    }
+
+    /**
+     * Prints an byte array as integers
+     * @param array Array of bytes to print
+     * @param length The length of the array
+     */
+    public static void printByteArrayAsInt(byte[] array,int length)
+    {
+        System.out.print("[");
+        for(int i=0;i<length;i++)
+        {
+            System.out.print(Byte.toUnsignedInt(array[i]));
             if(i<length-1)
                 System.out.print(", ");
         }
