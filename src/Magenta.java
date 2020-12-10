@@ -2,6 +2,11 @@ import java.io.ByteArrayOutputStream;
 import java.sql.Array;
 import java.util.BitSet;
 
+/**
+ * @author Gilad Molek
+ * @version 3.0
+ * @apiNote Magenta cypher
+ */
 public class Magenta {
     private int[] sbox;
 

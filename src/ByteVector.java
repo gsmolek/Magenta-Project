@@ -1,6 +1,13 @@
 import javax.swing.plaf.synth.SynthSpinnerUI;
 import java.util.Arrays;
 
+/**
+ * @author Gilad Molek
+ * @version 2.0
+ * @apiNote supports working with vectors
+ * @// TODO: 11/12/2020 merge with magenta class
+ * @// TODO: 11/12/2020 javadocs
+ */
 public class ByteVector {
     private byte[] vector;
     private int[] polynom;

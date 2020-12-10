@@ -1,5 +1,10 @@
 import java.util.Scanner;
-
+/**
+ * @author Gilad Molek
+ * @version 2.4
+ * @apiNote supports working with vectors
+ * @// TODO: 11/12/2020 implement more testings
+ */
 public class testings {
     private Magenta magenta;
 

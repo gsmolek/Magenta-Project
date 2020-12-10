@@ -1,5 +1,11 @@
+/**
+ * @author Gilad Molek
+ * @version 2.4
+ * @apiNote supports working with vectors
+ * @// TODO: 11/12/2020 merge with magenta class
+ * @// TODO: 11/12/2020 javadocs
+ */
 public class  Mathmatics {
-
     public static int power(int number,int exp)
     {
         int temp=number;
