@@ -13,6 +13,13 @@ public class Magenta {
         sbox=new int[256];
         this.f();
     }
+
+    /**
+     * Magenta algorithm decryption function
+     * @param message 128 byte array consists the encrypted message to decrypt
+     * @param key 128/192/256 bytes key,the same as used in encryption
+     * @return byte array with the decrypted message
+     */
     public byte[] decryption(byte[] message,byte[] key)
     {
         return this.V(this.encryption(this.V(message),key));
@@ -164,6 +171,13 @@ public class Magenta {
         res=new byte[][] {array1,array2};
         return res;
     }
+
+    /**
+     * splits the input array into 8 bytes arrays
+     * support 128(16 bytes)/192(24 bytes)/256(32 bytes) bits array
+     * @param array input array to split,128/192/256 bits array
+     * @return byte array of byte array holding the arrays in the order0,...,4
+     */
     public byte[][] splitArray(byte[] array)
     {
         int len=array.length;
