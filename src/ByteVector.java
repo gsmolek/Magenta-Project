@@ -61,7 +61,7 @@ public class ByteVector {
     }
 
     /**
-     * Prints an byte array as integers
+     * Prints a byte array as integers
      * @param array Array of bytes to print
      * @param length The length of the array
      */
