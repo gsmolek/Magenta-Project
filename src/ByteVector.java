@@ -83,5 +83,21 @@ public class ByteVector {
         }
         System.out.print("]\n");
     }
+    public static void printByteByteArray(byte[][] array)
+    {
+        int flag=0;
+        System.out.print("[");
+        for(int i=0;i<array.length;i++)
+        {
+            System.out.println("Row "+i+": ");
+            for(int j=0;j<array[i].length;j++) {
+                System.out.print(Byte.toUnsignedInt(array[i][j]));
+                if (j < array[i].length- 1)
+                    System.out.print(", ");
+            }
+            System.out.print("]\n");
+        }
+
+    }
 
 }

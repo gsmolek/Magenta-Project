@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Gilad Molek
  * @version 2.4
@@ -11,6 +14,7 @@ public class TestingController {
     {
         byte[] arr = {1, 0, 0, 1, 1, 0, 0, 1};
         byte[] array=new byte[16];
+        String array3=new String();
         int[] sbox;
         byte check = 1;
         Magenta m = new Magenta();
@@ -20,6 +24,12 @@ public class TestingController {
         for(int i=0;i<16;i++)
         {
             array[i]=first;
+            first=(byte)((byte)(first)+1);
+        }
+        first=1;
+        for(int i=0;i<100;i++)
+        {
+            array3=array3+Integer.toBinaryString(first);
             first=(byte)((byte)(first)+1);
         }
         byte[] array2={(byte)31,(byte)57,(byte)9,(byte)242,(byte)84
@@ -59,5 +69,63 @@ public class TestingController {
         t.testingEncryption(array,key192);
         t.testingEncryption(array,key256);
         t.testingDecrypiton(t.testingEncryption(array,key256),key256);
+        this.plainTextToByteArray(array3,128);
+        byte[] b={-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
+        t.testingEncryption(b,key256);
+        t.testingDecrypiton(t.testingEncryption(b,key256),key256);
+
+    }
+    public byte[][] plainTextToByteArray(String plainText,int chunkSize)
+    {
+        int counter=0;
+        String s;
+        byte[][] result;
+
+
+        List<String> t=new ArrayList<>();
+
+        for(int i=0;i<plainText.length();i+=8)
+        {
+            t.add(plainText.substring(i,Math.min(plainText.length(),i+8)));
+        }
+        int numberOfRows=Mathmatics.divideWithRoundUp(plainText.length(),128);
+        result=new byte[numberOfRows][16];
+        byte[] temp=new byte[t.size()];
+        for(int i=0 ;i<t.size();i++)
+        {
+            int num=Mathmatics.convertStringToInteger(t.get(i));
+            temp[i]=(byte)num;
+        }
+        int row=0,col=0;
+        for(int i=0 ;i<t.size();i++)
+        {
+            result[row][col]=temp[i];
+            col++;
+            if(col==16)
+            {
+                col=0;
+                row++;
+            }
+        }
+        System.out.println();
+        ByteVector.printByteByteArray(result);
+        System.out.println();
+        this.printByteArrayAsBits(temp);
+        System.out.println(temp);
+        System.out.println();
+        System.out.println(t);
+
+        return null;
+    }
+    public static void printByteArrayAsBits(byte[] array)
+    {
+        System.out.print("[");
+        for(int i=0;i<array.length;i++)
+        {
+            System.out.print(Integer.toBinaryString(Byte.toUnsignedInt(array[i])));
+            if(i<array.length-1)
+                System.out.print(", ");
+        }
+        System.out.print("]\n");
     }
 }

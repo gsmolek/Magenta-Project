@@ -1,5 +1,7 @@
 import java.io.ByteArrayOutputStream;
+import java.io.UnsupportedEncodingException;
 import java.sql.Array;
+import java.util.Arrays;
 import java.util.BitSet;
 
 /**
@@ -406,5 +408,18 @@ public class Magenta {
                 System.out.print("\n");
         }
         System.out.print("]\n");
+    }
+
+    public byte[][] plainTextToByteArray(String plainText,int chunkSize)
+    {
+        int counter=0;
+        byte[][] result;
+        int numberOfRows=Mathmatics.divideWithRoundUp(plainText.length(),128);
+        byte[] t=plainText.getBytes();
+        for(int i=0;i<t.length;i++)
+        {
+
+        }
+    return null;
     }
 }

@@ -30,6 +30,17 @@ public class  Mathmatics {
         }
         return num;
     }
+    public static int convertStringToInteger(String str)
+    {
+        int exp=str.length()-1;
+        int num=0;
+        for(int i=0;i<str.length();i++)
+        {
+            num=num+(Integer.parseInt(String.valueOf(str.charAt(i)))*Mathmatics.power(2,exp));
+            exp-=1;
+        }
+        return num;
+    }
     public static byte[] shiftleft(byte [] arr,int length)
     {
         for(int i=0;i<length-1;i++)
@@ -62,5 +73,9 @@ public class  Mathmatics {
             result[i]=(byte)(Byte.toUnsignedInt(arr[i])^Byte.toUnsignedInt(xor[i]));
         }
         return result;
+    }
+    public static int divideWithRoundUp(int numerator,int denominator)
+    {
+        return (numerator+denominator-1)/denominator;
     }
 }

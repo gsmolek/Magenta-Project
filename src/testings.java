@@ -11,6 +11,13 @@ public class testings {
     public testings() {
         magenta = new Magenta();
     }
+    public void testingPlainTextToBlockes(String plainText)
+    {
+        System.out.println("Test");
+        System.out.println("Plain text to Blocks-function");
+        byte[][] n=magenta.plainTextToByteArray(plainText,8);
+        ByteVector.printByteByteArray(n);
+    }
     public void testingDecrypiton(byte[] message,byte[] key)
     {
         byte[] n=magenta.decryption(message,key);
