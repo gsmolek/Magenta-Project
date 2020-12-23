@@ -99,5 +99,16 @@ public class ByteVector {
         }
 
     }
+    public static void printByteArrayAsBits(byte[] array)
+    {
+        System.out.print("[");
+        for(int i=0;i<array.length;i++)
+        {
+            System.out.print(Integer.toBinaryString(Byte.toUnsignedInt(array[i])));
+            if(i<array.length-1)
+                System.out.print(", ");
+        }
+        System.out.print("]\n");
+    }
 
 }

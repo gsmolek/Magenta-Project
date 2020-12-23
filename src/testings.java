@@ -233,6 +233,7 @@ public class testings {
         ByteVector.printByteArrayAsInt(n,8);
         System.out.println();
     }
+
     public void printSboxWithIndexes()
     {
         System.out.println("Test");

@@ -69,10 +69,22 @@ public class TestingController {
         t.testingEncryption(array,key192);
         t.testingEncryption(array,key256);
         t.testingDecrypiton(t.testingEncryption(array,key256),key256);
-        this.plainTextToByteArray(array3,128);
-        byte[] b={-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
-        t.testingEncryption(b,key256);
-        t.testingDecrypiton(t.testingEncryption(b,key256),key256);
+        System.out.println(array3.length());
+        System.out.println("testing");
+        //this.plainTextToByteArray(array3,128);
+        System.out.println("testing partition");
+        System.out.println("plainText:");
+        System.out.print(array3);
+        byte[][] res=m.plainTextToByteArray(array3,128);
+        ByteVector.printByteByteArray(res);
+        System.out.println("testing partition END");
+        byte[] enc=m.encryption(res[0],key128);
+
+        //byte[] b={-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
+        //byte[] ar=t.testingEncryption(b,key256);
+        //t.testingEncryption(res[0],key256);
+        enc=m.decryption(enc,key128);
+        ByteVector.printByteArrayAsInt(enc,16);
 
     }
     public byte[][] plainTextToByteArray(String plainText,int chunkSize)
@@ -107,25 +119,16 @@ public class TestingController {
                 row++;
             }
         }
+        System.out.println("result after partition");
         System.out.println();
         ByteVector.printByteByteArray(result);
         System.out.println();
-        this.printByteArrayAsBits(temp);
-        System.out.println(temp);
+        ByteVector.printByteArrayAsBits(temp);
+        //System.out.println(temp);
         System.out.println();
         System.out.println(t);
 
         return null;
     }
-    public static void printByteArrayAsBits(byte[] array)
-    {
-        System.out.print("[");
-        for(int i=0;i<array.length;i++)
-        {
-            System.out.print(Integer.toBinaryString(Byte.toUnsignedInt(array[i])));
-            if(i<array.length-1)
-                System.out.print(", ");
-        }
-        System.out.print("]\n");
-    }
+
 }
