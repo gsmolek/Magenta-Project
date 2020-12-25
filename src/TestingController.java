@@ -27,7 +27,7 @@ public class TestingController {
             first=(byte)((byte)(first)+1);
         }
         first=1;
-        for(int i=0;i<100;i++)
+        for(int i=0;i<111;i++)
         {
             array3=array3+Integer.toBinaryString(first);
             first=(byte)((byte)(first)+1);
@@ -76,6 +76,8 @@ public class TestingController {
         System.out.println("plainText:");
         System.out.print(array3);
         byte[][] res=m.plainTextToByteArray(array3,128);
+        ByteVector.printByteByteArray(res);
+        res=m.deletePadding(array3);
         ByteVector.printByteByteArray(res);
         System.out.println("testing partition END");
         byte[] enc=m.encryption(res[0],key128);

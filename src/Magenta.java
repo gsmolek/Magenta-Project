@@ -417,7 +417,7 @@ public class Magenta {
         int counter=0;
         String s;
         byte[][] result;
-
+        int padding=0;
 
         List<String> t=new ArrayList<>();
 
@@ -426,6 +426,7 @@ public class Magenta {
             t.add(plainText.substring(i,Math.min(plainText.length(),i+8)));
         }
         int numberOfRows=Mathmatics.divideWithRoundUp(plainText.length(),128);
+
         result=new byte[numberOfRows][16];
         byte[] temp=new byte[t.size()];
         for(int i=0 ;i<t.size();i++)
@@ -443,6 +444,52 @@ public class Magenta {
                 col=0;
                 row++;
             }
+        }
+        padding=countPadding(plainText);
+        if(countPadding(plainText)>0)
+        {
+            result[numberOfRows-1][16-padding]=(byte)padding;
+            result[numberOfRows-1][16-1]=(byte)padding;
+        }
+
+        return result;
+    }
+    public int countPadding(String plainText)
+    {
+        int numberOfRows=Mathmatics.divideWithRoundUp(plainText.length(),128);
+        int numberOfByteInPlainText=Mathmatics.divideWithRoundUp(plainText.length(),8);
+        int numberOfByteEmpty=(numberOfRows*16)-numberOfByteInPlainText;
+        return numberOfByteEmpty;
+    }
+    public byte[][] deletePadding(String plainText)
+    {
+        int length=plainText.length();
+        int last128=length-16;
+        int numberOfRows=Mathmatics.divideWithRoundUp(plainText.length(),128);
+        numberOfRows-=1;
+        byte[][] result=this.plainTextToByteArray(plainText,128);
+        int num;
+        int count=0;
+        for(int i=0;i<16;i++)
+        {
+            num=result[numberOfRows][i];
+            count=0;
+            for (int j=i+1;j<16;j++)
+            {
+                if(result[numberOfRows][j]==0)
+                    count+=1;
+            }
+            if(count==num-2 && result[numberOfRows][i+num-1]==num)
+            {
+                byte[] temp=new byte[16-num];
+                for(int k=0;k<16-num;k++)
+                {
+                    temp[k]=result[numberOfRows][k];
+                }
+                result[numberOfRows]=temp;
+                return result;
+            }
+
         }
         return result;
     }
