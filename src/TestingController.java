@@ -79,6 +79,10 @@ public class TestingController {
         ByteVector.printByteByteArray(res);
         res=m.deletePadding(array3);
         ByteVector.printByteByteArray(res);
+        String s=m.byteMatrixToStringOfBytes(res);
+        System.out.println("====================================");
+        System.out.println(s);
+        System.out.println("====================================");
         System.out.println("testing partition END");
         byte[] enc=m.encryption(res[0],key128);
 

@@ -412,6 +412,12 @@ public class Magenta {
         System.out.print("]\n");
     }
 
+    /**
+     * divides the plaintext into matrix of bytes each row contains a chunk of bits
+     * @param plainText bits stream as a String
+     * @param chunkSize how much bits in each row
+     * @return byte matrix of the plaintext string as sized chunks each row is a chunk
+     */
     public byte[][] plainTextToByteArray(String plainText,int chunkSize)
     {
         int counter=0;
@@ -454,6 +460,12 @@ public class Magenta {
 
         return result;
     }
+
+    /**
+     * what is the number of padding needed for the plaintext
+     * @param plainText plaintext of bits
+     * @return if there is a need for padding the number of padding
+     */
     public int countPadding(String plainText)
     {
         int numberOfRows=Mathmatics.divideWithRoundUp(plainText.length(),128);
@@ -461,6 +473,13 @@ public class Magenta {
         int numberOfByteEmpty=(numberOfRows*16)-numberOfByteInPlainText;
         return numberOfByteEmpty;
     }
+
+    /**
+     * deletes the padding and replaces the last row with smaller row
+     * use after decryption
+     * @param plainText plaintext of decrypted bits as String
+     * @return matrix ,each row is a chunk the last row without the padding
+     */
     public byte[][] deletePadding(String plainText)
     {
         int length=plainText.length();
@@ -490,6 +509,26 @@ public class Magenta {
                 return result;
             }
 
+        }
+        return result;
+    }
+
+    /**
+     * converts bytes matrix to String of bits
+     * @param matrix matrix of bits
+     * @return String containing the bits of the matrix
+     */
+    public String byteMatrixToStringOfBytes(byte[][] matrix)
+    {
+        int len=matrix.length;
+        String result="";
+        for(int i=0;i<len;i++)
+        {
+            int column_length=matrix[i].length;
+            for(int j=0;j<column_length;j++)
+            {
+                result=result+Integer.toBinaryString(Byte.toUnsignedInt(matrix[i][j]));
+            }
         }
         return result;
     }
