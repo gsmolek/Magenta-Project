@@ -85,12 +85,12 @@ public class TestingController {
         System.out.println("====================================");
         System.out.println("testing partition END");
         byte[] enc=m.encryption(res[0],key128);
-
+        m.keyGenerator();
         //byte[] b={-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
         //byte[] ar=t.testingEncryption(b,key256);
         //t.testingEncryption(res[0],key256);
-        enc=m.decryption(enc,key128);
-        ByteVector.printByteArrayAsInt(enc,16);
+        /////////enc=m.decryption(enc,key128);
+        /////////ByteVector.printByteArrayAsInt(enc,16);
 
     }
     public byte[][] plainTextToByteArray(String plainText,int chunkSize)

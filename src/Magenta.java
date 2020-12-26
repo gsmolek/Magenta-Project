@@ -1,10 +1,13 @@
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.sql.Array;
+import java.sql.Time;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.BitSet;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * @author Gilad Molek
@@ -529,6 +532,39 @@ public class Magenta {
             {
                 result=result+Integer.toBinaryString(Byte.toUnsignedInt(matrix[i][j]));
             }
+        }
+        return result;
+    }
+
+    /**
+     * generates a random key in random size between sizes: 128/192/256
+     * @return key for magenta algorithm
+     */
+    public byte[] keyGenerator()
+    {
+        long time= Instant.now().getEpochSecond();
+        int check;
+        time=time*13;
+        time=time%3;
+        check=Math.toIntExact(time);
+        byte[] key=this.keyCalculator((128+(64*check)));
+        return key;
+    }
+
+    /**
+     * this method actually calculates random values into keySize byte array
+     * @param keySize the size of the key
+     * @return random key
+     */
+    public byte[] keyCalculator(int keySize)
+    {
+        System.out.println("keySize: "+keySize);
+        int length=keySize/8;
+        byte[] result =new byte[length];
+        for(int i=0;i<length;i++)
+        {
+            int random= ThreadLocalRandom.current().nextInt(0,256);
+            result[i]=(byte)random;
         }
         return result;
     }
