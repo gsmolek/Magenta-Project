@@ -8,7 +8,8 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        TestingController testing=new TestingController();
+        //TestingController testing=new TestingController();
+        Client client=new Client();
 
     }
 }

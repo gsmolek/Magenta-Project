@@ -464,6 +464,40 @@ public class Magenta {
         return result;
     }
 
+    public byte[][] ByteArrayToByteMatrix(byte[] plainText,int chunkSize)
+    {
+        int counter=0;
+        String s;
+        byte[][] result;
+        int padding=0;
+
+        int numberOfRows=Mathmatics.divideWithRoundUp(plainText.length,16);
+
+        result=new byte[numberOfRows][16];
+
+        int row=0,col=0;
+        for(int i=0 ;i<plainText.length;i++)
+        {
+            result[row][col]=plainText[i];
+            col++;
+            if(col==16)
+            {
+                col=0;
+                row++;
+            }
+        }
+
+        padding=countPaddingOfByteArray(plainText);
+        if(countPaddingOfByteArray(plainText)>0)
+        {
+            result[numberOfRows-1][16-padding]=(byte)padding;
+            result[numberOfRows-1][16-1]=(byte)padding;
+        }
+        if(padding==1)
+            result[numberOfRows-1][15]=-1;
+        return result;
+    }
+
     /**
      * what is the number of padding needed for the plaintext
      * @param plainText plaintext of bits
@@ -476,7 +510,12 @@ public class Magenta {
         int numberOfByteEmpty=(numberOfRows*16)-numberOfByteInPlainText;
         return numberOfByteEmpty;
     }
-
+    public int countPaddingOfByteArray(byte[] plainText)
+    {
+        int numberOfRows=Mathmatics.divideWithRoundUp(plainText.length,16);
+        int numberOfByteEmpty=(numberOfRows*16)- plainText.length;
+        return numberOfByteEmpty;
+    }
     /**
      * deletes the padding and replaces the last row with smaller row
      * use after decryption
