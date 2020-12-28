@@ -12,8 +12,20 @@ public class Rsa {
     private BigInteger p,q,n,eoilerN,one=BigInteger.valueOf(1);
     private BigInteger e;//Encryption key
     private BigInteger d;//Decryption key
-    private int bitlength = 1024;
+    private int bitlength = 64;
     private Random rand;
+
+    public BigInteger getN() {
+        return n;
+    }
+
+    public BigInteger getE() {
+        return e;
+    }
+
+    public BigInteger getD() {
+        return d;
+    }
 
     public Rsa()
     {
@@ -37,7 +49,7 @@ public class Rsa {
 
     }
 
-    private byte[] decrypt(byte[] cyperText) {
+    public byte[] decrypt(byte[] cyperText) {
         return (new BigInteger(cyperText)).modPow(d, n).toByteArray(); //plainText=cypertext^d(mod(n)).
     }
 
@@ -49,8 +61,7 @@ public class Rsa {
         return str;
     }
 
-    private byte[] encrypt(byte[] bytes) {
-
+    public byte[] encrypt(byte[] bytes) {
         return (new BigInteger(bytes)).modPow(e, n).toByteArray(); // cyperText=plainText(in bits)^e (mod(n))
     }
 

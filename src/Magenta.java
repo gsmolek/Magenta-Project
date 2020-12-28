@@ -17,6 +17,17 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Magenta {
     private int[] sbox;
 
+    public void setDataTodecrypt(byte[][] dataTodecrypt) {
+        this.dataTodecrypt = dataTodecrypt;
+    }
+
+    public void setDecryption_key(byte[] decryption_key) {
+        this.decryption_key = decryption_key;
+    }
+
+    private byte[][] dataTodecrypt;
+    private byte[] decryption_key;
+
     /**
      * constructor creates S-BOX.
      */
@@ -25,7 +36,13 @@ public class Magenta {
         sbox=new int[256];
         this.f();
     }
-
+    public Magenta(byte[][] dec,byte[] key)
+    {
+        sbox=new int[256];
+        this.f();
+        this.dataTodecrypt=dec;
+        this.decryption_key=key;
+    }
     /**
      * Magenta algorithm decryption function
      * @param message 128 byte array consists the encrypted message to decrypt
@@ -34,11 +51,16 @@ public class Magenta {
      */
     public byte[] decryption(byte[] message,byte[] key)
     {
-        return this.V(this.encryption(this.V(message),key));
+        byte[] temp=new byte[message.length];
+        for (int i=0;i< message.length;i++)
+            temp[i]=message[i];
+        byte[] temp2=V(temp);
+        byte[] temp3=encryption(temp2,key);
+        return V(temp3);
     }
     public byte[] V(byte[] message)
     {
-        byte[][] array=this.split16LengthArray(message);
+        byte[][] array=split16LengthArray(message);
         return attachTwoArrays(array[1],array[0]);
     }
     /**
@@ -57,7 +79,7 @@ public class Magenta {
             byte[][] new_key=this.split16LengthArray(key);
             byte[] k1=new_key[0];
             byte[] k2=new_key[1];
-            return this.
+            return
             feistelRound
                     (feistelRound
                             (feistelRound
@@ -76,7 +98,7 @@ public class Magenta {
             byte[] k1=new_key[0];
             byte[] k2=new_key[1];
             byte[] k3=new_key[2];
-            return this.
+            return
             feistelRound(
                     feistelRound(
                             feistelRound(
@@ -96,7 +118,7 @@ public class Magenta {
             byte[] k2=new_key[1];
             byte[] k3=new_key[2];
             byte[] k4=new_key[3];
-            return this.
+            return
             feistelRound(
                     feistelRound(
                             feistelRound(
@@ -552,9 +574,57 @@ public class Magenta {
             }
 
         }
+        if(result[numberOfRows][15]==-1)
+        {
+            byte[] t=new byte[15];
+            for(int k=0;k<15;k++)
+            {
+                t[k]=result[numberOfRows][k];
+            }
+            result[numberOfRows]=t;
+        }
         return result;
     }
+    public byte[][] deletePaddingByteMatrix(byte[][] plainText)
+    {
+        int length=plainText.length;
+        int numberOfRows=plainText.length;
+        numberOfRows-=1;
+        byte[][] result=plainText;
+        int num;
+        int count=0;
+        for(int i=0;i<16;i++)
+        {
+            num=result[numberOfRows][i];
+            count=0;
+            for (int j=i+1;j<16;j++)
+            {
+                if(result[numberOfRows][j]==0)
+                    count+=1;
+            }
+            if(count==num-2 && result[numberOfRows][i+num-1]==num)
+            {
+                byte[] temp=new byte[16-num];
+                for(int k=0;k<16-num;k++)
+                {
+                    temp[k]=result[numberOfRows][k];
+                }
+                result[numberOfRows]=temp;
+                return result;
+            }
 
+        }
+        if(result[numberOfRows][15]==-1)
+        {
+            byte[] t=new byte[15];
+            for(int k=0;k<15;k++)
+            {
+                t[k]=result[numberOfRows][k];
+            }
+            result[numberOfRows]=t;
+        }
+        return result;
+    }
     /**
      * converts bytes matrix to String of bits
      * @param matrix matrix of bits
@@ -586,7 +656,7 @@ public class Magenta {
         time=time*13;
         time=time%3;
         check=Math.toIntExact(time);
-        byte[] key=this.keyCalculator((128+(64*check)));
+        byte[] key=this.keyCalculator(128);
         return key;
     }
 
@@ -607,4 +677,5 @@ public class Magenta {
         }
         return result;
     }
+
 }

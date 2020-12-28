@@ -110,5 +110,61 @@ public class ByteVector {
         }
         System.out.print("]\n");
     }
+    public static boolean compareTwoBytesArray(byte[] array1,byte[] array2)
+    {
+        int array1_length=array1.length;
+        int array2_length=array2.length;
+        if(array1_length==array2_length)
+        {
+            for(int i=0;i<array1_length;i++)
+            {
+                if(array1[i]!=array2[i])
+                    return false;
+            }
+            return true;
+        }
+        return false;
+    }
+    public static boolean compareTwoBytesMatrixs(byte[][] mat1,byte[][] mat2)
+    {
+        int mat1_length=mat1.length;
+        int mat2_length=mat2.length;
+        if(mat1_length==mat2.length)
+        {
+            for(int i=0;i<mat1_length;i++)
+                for(int j=0;j<16;j++)
+                {
+                    if(mat1[i][j]!=mat2[i][j])
+                        return false;
+                }
+            return true;
+        }
+        return false;
+    }
+
+    public static byte[] fromMatrixToArray(byte[][] mat)
+    {
+        int index=0;
+        byte[] array = new byte[calculateLengthOfMatrix(mat)];
+        for (int i=0;i<mat.length;i++)
+        {
+            for(int j=0;j<mat[i].length;j++)
+            {
+                array[index]=mat[i][j];
+                index++;
+            }
+        }
+        return array;
+    }
+    public static int calculateLengthOfMatrix(byte[][] mat)
+    {
+        int count=0;
+        for(int i=0;i<mat.length;i++) {
+            for (int j = 0; j < mat[i].length; j++) {
+                count += 1;
+            }
+        }
+        return count;
+    }
 
 }
