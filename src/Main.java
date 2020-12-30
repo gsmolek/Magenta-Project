@@ -15,15 +15,6 @@ public class Main {
         String id;
         String password;
         boolean usernameResult;
-        /*
-        byte[][] sha1_file;
-        byte[][] magenta_data;
-        byte[][] original_data;
-        byte[][] integrity_sha1_data;
-        byte[][] decrypted;
-         */
-        //TestingController testing=new TestingController();
-
         byte[] key_sha1;
         byte[] key_rsa;
         byte[][] magenta_file;
@@ -79,9 +70,10 @@ public class Main {
                 if(ByteVector.compareTwoBytesMatrixs(magenta_file_integrity,magenta_sha1))
                 {
                     encrypted=new byte[magenta_file.length][16];
+                    Magenta magenta=new Magenta();
                     for(int i=0;i< encrypted.length;i++)
                     {
-                        Magenta magenta=new Magenta();
+
                         encrypted[i]=magenta.decryption(magenta_file[i],key_original);
                     }
                     byte[] array_file=ByteVector.fromMatrixToArray(encrypted);
@@ -91,41 +83,13 @@ public class Main {
 
                     File destination = new File("music "+number+".mp3");
                     FileOperations.toFile(array_file, destination);
+                    System.out.println("S-BOX");
+
                 }
 
             }
-            /*
-            Rsa rsa=server.getR();
-            Magenta magenta=new Magenta();
-            byte[] original_key=server.getR().decrypt(server.getRsa_key());
-            byte[] Sha1_key=server.getSha1_key();
-            byte[] rsa_key=server.getRsa_key();
-            byte[] integrityCheck= server.getSha1_key();
-            byte[] integrity_sha1_key=new Sha1().getDigestOfBytes(original_key);
-            boolean isKey=ByteVector.compareTwoBytesArray(integrity_sha1_key,integrityCheck);
-            sha1_file = server.getSha1_magenta();
-            magenta_data=server.getEncryptedBlocksOfData();
-            byte[] integrityCheckFile=new Sha1().getDigestOfBytes(ByteVector.fromMatrixToArray(magenta_data));
-            original_data = new byte[magenta_data.length][16];
-            boolean isFile=ByteVector.compareTwoBytesArray(integrity_sha1_data,ByteVector.fromMatrixToArray(sha1_file));
-            ByteVector.printByteArrayAsInt(rsa_key,rsa_key.length);
-            ByteVector.printByteArrayAsInt(original_key,16);
-            */
             if(isKey) {
-                /*
-                System.out.println("magenta data: "+magenta_data.length);
-                magenta=new Magenta(magenta_data,original_key);
-                //magenta.decrypt_operation();
-                decrypted=new byte[magenta_data.length][16];
-                for(int k=0;k<magenta_data.length;k++)
-                    decrypted[k]=magenta.decryption(magenta_data[k],original_key);
-                ByteVector.printByteArrayAsInt(decrypted[magenta_data.length-1],16);
-                byte[] j=ByteVector.fromMatrixToArray(decrypted);
-                File destination = new File("music.mp3");
-                FileOperations.toFile(j, destination);
-                ByteVector.printByteArrayAsInt(sha1_file[0],16);
-                ByteVector.printByteArrayAsInt(integrity_sha1_data,16);
-                */
+
             }
 
         }
