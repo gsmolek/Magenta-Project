@@ -155,7 +155,8 @@ public class Magenta {
         array_x8_x15=splitedArray[1];
         array_x8_x15_y0_y7=attachTwoArrays(array_x8_x15,arrayY);
         arrayE3=E(array_x8_x15_y0_y7,3);
-        array_x0_x7_xor_E3=Mathmatics.twoByteArrayOfBitsXOR(array_x0_x7,arrayE3,8);
+        array_x0_x7_xor_E3=Mathmatics.
+                twoByteArrayOfBitsXOR(array_x0_x7,arrayE3,8);
         return attachTwoArrays(array_x8_x15,array_x0_x7_xor_E3);
     }
     /**
@@ -181,7 +182,8 @@ public class Magenta {
     {
         if(j==1)
             return this.T(array);
-        return this.T(this.attachTwoArrays(Mathmatics.twoByteArrayOfBitsXOR(this.split16LengthArray(array)[0],
+        return this.T(this.attachTwoArrays(Mathmatics.
+                        twoByteArrayOfBitsXOR(this.split16LengthArray(array)[0],
                 this.bytesArrayToEvenByteArray(C(array,j-1)),8),
                 Mathmatics.twoByteArrayOfBitsXOR(this.split16LengthArray(array)[1],
                         this.bytesArrayToOddByteArray(C(array,j-1)),8)));

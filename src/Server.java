@@ -107,12 +107,9 @@ public class Server {
                 sha1_magenta[i]=new Sha1().getDigestOfBytes(encryptedBlocksOfData[i]);
             }
 
-            System.out.println("key rsa");
             //ByteVector.printByteArrayAsInt(blocksOfData[0],16);
             ByteVector.printByteArrayAsInt(rsa_key,rsa_key.length);
             flag=false;
-            System.out.println("finish server");
-
         }
     }
     private void initializeHashMap()

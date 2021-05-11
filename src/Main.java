@@ -36,7 +36,6 @@ public class Main {
         String digest = new Sha1().getDigestOfString(password.getBytes()); //bytes that sha encrypts for password.
         System.out.println("this are the bytes that sha encrypted for your password: " + digest);
         server=new Server(id,digest);
-
         usernameResult=server.isCorrect();
         if(usernameResult==true)
         {
@@ -47,22 +46,17 @@ public class Main {
             n=server.getN();
             d=server.getD();
             e=server.getE();
-            Rsa rsa=new Rsa(e,d,n);
+            Rsa rsa=new Rsa(server.getE(),server.getD(),server.getN());
 
             key_original=rsa.decrypt(key_rsa);
             key_original_sha1=new Sha1().getDigestOfBytes(key_original);
 
 
-            while(ByteVector.compareTwoBytesArray(key_sha1,key_original_sha1)==false)
-            {
-                key_original=rsa.decrypt(key_rsa);
-                key_original_sha1=new Sha1().getDigestOfBytes(key_original);
-            }
             ByteVector.printByteArrayAsInt(key_original_sha1,16);
             ByteVector.printByteArrayAsInt(key_sha1,16);
             if(ByteVector.compareTwoBytesArray(key_sha1,key_original_sha1))
             {
-                magenta_file_integrity=new byte[magenta_file.length][16];
+                magenta_file_integrity=new byte[magenta_file.length][20];
                 for(int i=0;i<magenta_file_integrity.length;i++)
                 {
                     magenta_file_integrity[i]=new Sha1().getDigestOfBytes(magenta_file[i]);
@@ -73,7 +67,6 @@ public class Main {
                     Magenta magenta=new Magenta();
                     for(int i=0;i< encrypted.length;i++)
                     {
-
                         encrypted[i]=magenta.decryption(magenta_file[i],key_original);
                     }
                     byte[] array_file=ByteVector.fromMatrixToArray(encrypted);
@@ -83,12 +76,12 @@ public class Main {
 
                     File destination = new File("music "+number+".mp3");
                     FileOperations.toFile(array_file, destination);
-                    System.out.println("S-BOX");
+
 
                 }
 
             }
-            if(isKey) {
+            else {
 
             }
 

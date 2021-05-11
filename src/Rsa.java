@@ -12,7 +12,7 @@ public class Rsa {
     private BigInteger p,q,n,eoilerN,one=BigInteger.valueOf(1);
     private BigInteger e;//Encryption key
     private BigInteger d;//Decryption key
-    private int bitlength = 64;
+    private int bitlength = 1024;
     private Random rand;
 
     public BigInteger getN() {
